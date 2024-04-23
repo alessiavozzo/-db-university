@@ -16,7 +16,7 @@ un corso di laurea appartiene a un dipartimento
 - location | VARCHAR(50) | NULL
 - website | VARCHAR(255) | DEFAULT("N/A")
 
-## table name: degree_course
+## table name: degree_courses
 un corso può avere tanti studenti
 uno studente può essere iscritto a un solo corso di laurea
 
@@ -50,7 +50,8 @@ uno studente può essere iscritto a un solo corso di laurea
 ## table name: examcall
 - id | BIGINT | INDEX | AI | UNIQUE | PK | NOTNULL
 - course_id | FK
-- date | DATETIME
+- date | DATE
+- time | TIME
 - room | VARCHAR(20)
 
 
@@ -66,4 +67,4 @@ uno studente può essere iscritto a un solo corso di laurea
 - id | BIGINT | INDEX | AI | UNIQUE | PK | NOTNULL
 - examcall_id | FK
 - student_id | FK
-- vote | VARCHAR(10)
+- vote | VARCHAR(10) | NOTNULL
