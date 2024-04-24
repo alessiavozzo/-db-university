@@ -7,6 +7,11 @@ SELECT * FROM `students` WHERE `date_of_birth` LIKE "1990-%";
 SELECT * FROM `courses` WHERE `cfu` > 10;
 
 - Selezionare tutti gli studenti che hanno più di 30 anni
+SELECT * FROM `students` WHERE `date_of_birth` < "1994-04-24";
+oppure
+SELECT * FROM `students` WHERE `date_of_birth` < DATE_SUB(CURDATE(), INTERVAL 30 YEAR);
+
+oppure (meno precisi)
 SELECT * FROM `students` WHERE YEAR(date_of_birth) < 1994;
 oppure
 SELECT * FROM `students` WHERE YEAR(CURDATE()) - YEAR(date_of_birth) > 30;
@@ -18,6 +23,10 @@ SELECT * FROM `courses` WHERE `period` = "I semestre" AND `year` = 1;
 SELECT * FROM `exams` WHERE `date` = "2020-06-20" AND `hour` >= "14:00";
 
 - Selezionare tutti i corsi di laurea magistrale (38)
+SELECT * FROM `degrees` WHERE `level`= "magistrale";
 
 - Da quanti dipartimenti è composta l'università? (12)
+SELECT COUNT(*) as `n_departments` FROM `departments`;
+
 - Quanti sono gli insegnanti che non hanno un numero di telefono? (50)
+SELECT COUNT(*) AS `teachers_without_phone_number` FROM `teachers` WHERE `phone` IS NULL;
