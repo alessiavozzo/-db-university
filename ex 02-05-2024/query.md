@@ -84,7 +84,7 @@ ORDER BY `student_lastname`;
 
 ### parte 2: filtro i tentativi con voto minimo 18, mi aspetto che voto minimo e voto massimo coincidano (perchè se rifiuti un voto sopra il 18 meriti il rogo) e che ci sia un unico tentativo, visto che mi trova solo i tentativi con un voto superiore al 18
 SELECT `students`.`name` AS `student_name`, `students`.`surname` AS `student_lastname`, `courses`.`name` AS `course_name`, 
-COUNT(`exam_student`.`vote`) AS 'tries', 
+COUNT(`exam_student`.`vote`) AS `tries`, 
 MAX(`exam_student`.`vote`) AS `max_vote`,
 MIN(`exam_student`.`vote`) AS `min_vote`
 FROM `students`
