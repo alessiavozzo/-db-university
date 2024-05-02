@@ -67,3 +67,30 @@ WHERE `departments`.`name` = "Dipartimento di Matematica";
 <!-- DISTINCT perchè ci sono risultati doppi ma io li voglio vedere una volta sola -->
 
 ### BONUS: Selezionare per ogni studente il numero di tentativi sostenuti per ogni esame, stampando anche il voto massimo. Successivamente, filtrare i tentativi con voto minimo 18.
+#### parte 1: selezionare il numero di tentativi sostenuti, stampare il voto massimo
+SELECT `students`.`name` AS `student_name`, `students`.`surname` AS `student_lastname`,
+COUNT(`exam_student`.`vote`) AS `tries`,
+MAX(`exam_student`.`vote`) AS `max_vote`
+FROM `students`
+INNER JOIN `exam_student`
+ON `students`.`id`=`exam_student`.`student_id`
+GROUP BY `students`.`id`
+ORDER BY `tries` DESC;
+#### parte 2: filtrare i tentativi con voto minimo 18
+SELECT `students`.`name` AS `student_name`, `students`.`surname` AS `student_lastname`,
+COUNT(`exam_student`.`vote`) AS `tries`
+FROM `students`
+INNER JOIN `exam_student`
+ON `students`.`id`=`exam_student`.`student_id`
+WHERE `exam_student`.`vote` >= 18
+GROUP BY `students`.`id`
+ORDER BY `tries` DESC;
+
+<!-- seleziono per ogni studente i tentativi fatti
+SELECT `students`.`name` AS `student_name`, `students`.`surname` AS `student_lastname`,
+COUNT(`exam_student`.`vote`) AS `tries`
+FROM `students`
+INNER JOIN `exam_student`
+ON `students`.`id`=`exam_student`.`student_id`
+GROUP BY `students`.`id`
+ORDER BY `tries` DESC; -->
