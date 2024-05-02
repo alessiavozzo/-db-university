@@ -67,7 +67,41 @@ WHERE `departments`.`name` = "Dipartimento di Matematica";
 <!-- DISTINCT perchè ci sono risultati doppi ma io li voglio vedere una volta sola -->
 
 ### BONUS: Selezionare per ogni studente il numero di tentativi sostenuti per ogni esame, stampando anche il voto massimo. Successivamente, filtrare i tentativi con voto minimo 18.
-#### parte 1: selezionare il numero di tentativi sostenuti, stampare il voto massimo
+
+### parte 1: seleziono il numero di tentativi sostenuti per ogni esame e stampo il voto massimo
+SELECT `students`.`name` AS `student_name`, `students`.`surname` AS `student_lastname`, `courses`.`name` AS `course_name`, 
+COUNT(`exam_student`.`vote`) AS `tries`, 
+MAX(`exam_student`.`vote`) AS `max_vote`
+FROM `students`
+INNER JOIN `exam_student` 
+ON `students`.`id` = `exam_student`.`student_id`
+INNER JOIN `exams` 
+ON `exam_student`.`exam_id` = `exams`.`id`
+INNER JOIN `courses` 
+ON `exams`.`course_id` = `courses`.`id`
+GROUP BY `students`.`id`, `courses`.`name`
+ORDER BY `student_lastname`;
+
+### parte 2: filtro i tentativi con voto minimo 18, mi aspetto che voto minimo e voto massimo coincidano (perchè se rifiuti un voto sopra il 18 meriti il rogo) e che ci sia un unico tentativo, visto che mi trova solo i tentativi con un voto superiore al 18
+SELECT `students`.`name` AS `student_name`, `students`.`surname` AS `student_lastname`, `courses`.`name` AS `course_name`, 
+COUNT(`exam_student`.`vote`) AS 'tries', 
+MAX(`exam_student`.`vote`) AS `max_vote`,
+MIN(`exam_student`.`vote`) AS `min_vote`
+FROM `students`
+INNER JOIN `exam_student` 
+ON `students`.`id` = `exam_student`.`student_id`
+INNER JOIN `exams` 
+ON `exam_student`.`exam_id` = `exams`.`id`
+INNER JOIN `courses` 
+ON `exams`.`course_id` = `courses`.`id`
+WHERE `exam_student`.`vote` >= 18
+GROUP BY `students`.`id`, `courses`.`name`
+ORDER BY `tries`;
+
+
+
+### TENTATIVI PER EX BONUS:
+#### parte 1: selezionare il numero di tentativi sostenuti, stampare il voto massimo (però seleziona i tentativi totali, non i tentativi per esame)
 SELECT `students`.`name` AS `student_name`, `students`.`surname` AS `student_lastname`,
 COUNT(`exam_student`.`vote`) AS `tries`,
 MAX(`exam_student`.`vote`) AS `max_vote`
@@ -86,11 +120,11 @@ WHERE `exam_student`.`vote` >= 18
 GROUP BY `students`.`id`
 ORDER BY `tries` DESC;
 
-<!-- seleziono per ogni studente i tentativi fatti
+seleziono per ogni studente i tentativi fatti
 SELECT `students`.`name` AS `student_name`, `students`.`surname` AS `student_lastname`,
 COUNT(`exam_student`.`vote`) AS `tries`
 FROM `students`
 INNER JOIN `exam_student`
 ON `students`.`id`=`exam_student`.`student_id`
 GROUP BY `students`.`id`
-ORDER BY `tries` DESC; -->
+ORDER BY `tries` DESC;
